@@ -13,6 +13,21 @@ def is_pow_of_2(length: int):
         length //= 2
     return length == 1
 
+class Operator:
+    def __init__(self, matrix: npt.NDArray | list):
+        matrix = np.array(matrix, dtype=complex)
+        if matrix.shape[0] != matrix.shape[1]:
+            raise Exception("The operation must be a square matrix")
+        if not np.allclose((matrix @ np.conjugate(matrix).T), np.identity(matrix.shape[0]), atol=1e-5):
+            raise Exception("The operation must be a unitary matrix")
+        self.operation = matrix
+    
+    def to_numpy(self):
+        return self.operation
+    
+    def __str__(self):
+        return str(self.operation.round(4))
+
 class Qubit:
     def __init__(self, alpha: complex, beta: complex):
         if abs(1 - e_norm([alpha, beta])) > 1e-5:
@@ -34,14 +49,15 @@ class Qubit:
             self.beta = 1
             return 1
         
-    def evolve(self, operator: npt.NDArray):
+    def evolve(self, operator: Operator):
+        operator = operator.to_numpy()
         if operator.shape != (2, 2):
             raise Exception(f"The operator's shape {operator.shape} is incompatible with the qubit")
-        state = np.ndarray([self.alpha, self.beta])
+        state = np.array([self.alpha, self.beta])
         transformed = operator @ state
         self.alpha = transformed[0]
         self.beta = transformed[1]
 
     def to_numpy(self):
-        return np.ndarray([self.alpha, self.beta])
+        return np.array([self.alpha, self.beta])
         
