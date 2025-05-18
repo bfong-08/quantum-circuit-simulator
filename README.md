@@ -19,7 +19,7 @@ Quantum teleportation allows the transfer of an unknown quantum state from one l
 
 ## Goals
 
-- Understand and implement the **quantum teleportation protocol**
+- Understand and implement the **quantum teleportation protocol** without the use of quantum computing libraries (i.e. Qiskit)
 - Explore how **entanglement** and **measurement** affect quantum systems
 - Simulate key quantum gates: **Hadamard**, **CNOT**, **Pauli-X**, and **Pauli-Z**
 - Simulate **partial measurements** of entangled systems
