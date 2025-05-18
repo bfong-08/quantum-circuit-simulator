@@ -41,6 +41,17 @@ class QuantumState:
     def __str__(self):
         return self.state.round(4).__str__()
     
+    @classmethod
+    def from_qubits(self, *qubits: 'npt.NDArray | QuantumState'):
+        statevector = np.array([1], dtype=complex)
+        for qubit in qubits:
+            if isinstance(qubit, QuantumState):
+                statevector = np.kron(statevector, qubit.to_numpy())
+            else:
+                statevector = np.kron(statevector, qubit)
+
+        return self(statevector)
+
     def add_qubit(self, qubit: 'npt.NDArray | QuantumState'):
         if isinstance(qubit, QuantumState):
             q = qubit.to_numpy()
