@@ -2,13 +2,45 @@ import numpy as np
 import numpy.typing as npt
 from random import random
 
-def abs_squared(num: complex | float):
+def abs_squared(num: complex | float) -> npt.NDArray | float:
+    """
+    Returns the absolute value of a number squared.
+    Used to find probabilities associated with
+    outcomes of a quantum state
+
+    Args:
+        num (complex | float): the input
+
+    Returns:
+        npt.NDArray | float: the output
+    """
     return np.abs(np.square(num))
 
-def e_norm(vector: npt.NDArray):
+def e_norm(vector: npt.NDArray) -> float | int:
+    """
+    Calculates the Euclidean norm of a vector. Used
+    to ensure that a statevector has a Euclidean
+    norm of 1.
+
+    Args:
+        vector (npt.NDArray): the statevector
+
+    Returns:
+        float | int: the Euclidean norm
+    """
     return np.sum(abs_squared(vector))
 
-def is_pow_of_2(length: int):
+def is_pow_of_2(length: int) -> bool:
+    """
+    Determines of a number is a power of 2, assuming
+    that `length` > 0.
+
+    Args:
+        length (int): the input
+
+    Returns:
+        bool: true if the number is a power of 2; false otherwise
+    """
     while length % 2 == 0:
         length //= 2
     return length == 1
@@ -30,6 +62,17 @@ class Operator:
 
 class QuantumState:
     def __init__(self, statevector: npt.NDArray):
+        """
+        Represents a quantum state through a statevector
+
+        Args:
+            statevector (npt.NDArray): the initial quantum state
+
+        Raises:
+            Exception: the state vector's length must be a power of 2
+            Exception: the Euclidean norm of the state must be 1
+        """
+
         if not is_pow_of_2(len(statevector)):
             raise Exception("The length of the statevector must be a power of 2")
         if abs(1 - e_norm(statevector)) > 1e-5:
@@ -42,7 +85,13 @@ class QuantumState:
         return self.state.round(4).__str__()
     
     @classmethod
-    def from_qubits(self, *qubits: 'npt.NDArray | QuantumState'):
+    def from_qubits(self, *qubits: 'npt.NDArray | QuantumState') -> 'QuantumState':
+        """
+        Constructs a quantum state from a list of n qubits
+
+        Returns:
+            QuantumState: an instance of the `QuantumState` class
+        """
         statevector = np.array([1], dtype=complex)
         for qubit in qubits:
             if isinstance(qubit, QuantumState):
@@ -53,6 +102,12 @@ class QuantumState:
         return self(statevector)
 
     def add_qubit(self, qubit: 'npt.NDArray | QuantumState'):
+        """
+        Adds a qubit to a quantum state using the tensor product
+
+        Args:
+            qubit (npt.NDArray | QuantumState): the qubit to be added to the quantum state
+        """
         if isinstance(qubit, QuantumState):
             q = qubit.to_numpy()
             self.state = np.kron(self.state, q)
@@ -61,7 +116,20 @@ class QuantumState:
             self.state = np.kron(self.state, qubit)
             self.n_qubits += round(np.log2(len(qubit)))
     
-    def measure(self, index: int):
+    def measure(self, index: int) -> int:
+        """
+        Performs a partial measurement on a quantum state, 
+        updating the state according to the measurement outcome
+
+        Args:
+            index (int): the index of the qubit to be measured
+
+        Raises:
+            Exception: the index must correspond to an existing qubit
+
+        Returns:
+            int: the result of the measurement
+        """
         if index < 0 or index >= self.n_qubits:
             raise Exception(f"Qubit index {index} is out of range for {self.n_qubits} qubits")
 
@@ -78,7 +146,19 @@ class QuantumState:
         self.state /= np.sqrt(sum(probs[indices]))
         return result
 
-    def get_qubit_indices(self, index: int, outcome: int):
+    def get_qubit_indices(self, index: int, outcome: int) -> list[int]:
+        """
+        Retrieves the indices of the statevector 
+        that contain the specified outcome
+        of the qubit in the specified index
+
+        Args:
+            index (int): the index of the qubit
+            outcome (int): the qubit's desired state (0, 1)
+
+        Returns:
+            list[int]: the indices of the statevector
+        """
         indices = []
         for i in range(len(self.state)):
             bits = format(i, f'0{self.n_qubits}b')
@@ -87,6 +167,14 @@ class QuantumState:
         return indices
     
     def CNOT(self, control: int, target: int):
+        """
+        Performs a controlled NOT gate on two specified qubits,
+        leaving all other qubits unchanged
+
+        Args:
+            control (int): the index of the control qubit
+            target (int): the index of the target qubit
+        """
         control = self.n_qubits - control - 1
         target = self.n_qubits - target - 1
         new_state = np.zeros_like(self.state)
@@ -102,6 +190,13 @@ class QuantumState:
         self.state = new_state
         
     def X(self, index: int):
+        """
+        Performs a bit flip on the specified qubit,
+        leaving all other qubits unchanged
+
+        Args:
+            index (int): the index of the target qubit
+        """
         index = self.n_qubits - index - 1
         x = np.array([
             [0, 1],
@@ -111,6 +206,13 @@ class QuantumState:
         self.state = operator @ self.state
 
     def Z(self, index: int):
+        """
+        Performs a phase flip on the specified qubit,
+        leaving all other qubits unchanged
+
+        Args:
+            index (int): the index of the target qubit
+        """
         index = self.n_qubits - index - 1
         z = np.array([
             [1, 0],
@@ -120,6 +222,13 @@ class QuantumState:
         self.state = operator @ self.state
 
     def H(self, index: int):
+        """
+        Performs a Hadamard gate on the specified qubit,
+        leaving all other qubits unchanged
+
+        Args:
+            index (int): the index of the target qubit
+        """
         index = self.n_qubits - index - 1
         h = np.array([
             [1, 1],
@@ -128,7 +237,22 @@ class QuantumState:
         operator = self.__expand_operator(index, h)
         self.state = operator @ self.state
 
-    def __expand_operator(self, index: int, operation: npt.NDArray):
+    def __expand_operator(self, index: int, operation: npt.NDArray) -> npt.NDArray:
+        """
+        Expands an operator to NxN dimensions where N is the 
+        length of the statevector. The new operator will only
+        affect the qubit of the specified index, leaving all
+        other qubits unchanged. It does this by finding the 
+        tensor products of identity matrices and the operation,
+        where the order corresponds to the specified index
+
+        Args:
+            index (int): the index of the target qubit
+            operation (npt.NDArray): the operation to be performed on the target qubit
+
+        Returns:
+            npt.NDArray: the new expanded operator
+        """
         i_2 = np.identity(2)
         if index == 0:
             operator = operation
@@ -141,5 +265,11 @@ class QuantumState:
                 operator = np.kron(operator, i_2)
         return operator
 
-    def to_numpy(self):
+    def to_numpy(self) -> npt.NDArray:
+        """
+        Returns the statevector as an NDArray
+
+        Returns:
+            npt.NDArray: the statevector
+        """
         return self.state
