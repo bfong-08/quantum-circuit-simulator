@@ -49,6 +49,12 @@ Quantum teleportation allows the transfer of an unknown quantum state from one l
 - **Classical communication** to complete teleportation
 - **Custom implementation** of state evolution (no Qiskit involved)
 
+## Diagram
+
+![Quantum Teleportation](./assets/protocol-diagram.png)
+
+_Figure: Visual representation of the quantum teleportation protocol._
+
 ## How to Run
 
 1. Clone the repository
