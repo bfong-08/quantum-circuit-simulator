@@ -17,6 +17,12 @@
 
 Quantum teleportation allows the transfer of an unknown quantum state from one location to another using **entanglement** and **classical communication** without physically sending the qubit itself. This process is important because it is a reliable way to transmit quantum data securely and accurately without measuring the quantum state or violating the **no-cloning theorem.** Quantum teleportation is essential for building quantum networks, distributed quantum computers, and the quantum internet.
 
+## Diagram
+
+![Quantum Teleportation](./assets/protocol-diagram.png)
+
+_Figure: Visual representation of the quantum teleportation protocol._
+
 ## Goals
 
 - Understand and implement the **quantum teleportation protocol** without the use of quantum computing libraries (i.e. Qiskit)
@@ -49,11 +55,7 @@ Quantum teleportation allows the transfer of an unknown quantum state from one l
 - **Classical communication** to complete teleportation
 - **Custom implementation** of state evolution (no Qiskit involved)
 
-## Diagram
-
-![Quantum Teleportation](./assets/protocol-diagram.png)
-
-_Figure: Visual representation of the quantum teleportation protocol._
+---
 
 ## How to Run
 
@@ -96,6 +98,8 @@ You should see the full protocol simulated step-by-step, including:
 - Conditional gate corrections
 - Final comparison between Bob's qubit and the original unknown state
 
+---
+
 ## What I Learned
 
 While building this, I deepened my understanding of quantum state manipulation, gate operations, and how measurement impacts entangled systems. This project helped me gain confidence in applying quantum concepts using Python, and it is my first major step into the world of quantum computing.
@@ -103,6 +107,8 @@ While building this, I deepened my understanding of quantum state manipulation, 
 ## Next Steps
 
 My future goals are to explore other quantum algorithms, such as **Grover's Algorithm,** and research what tasks or problems can be solved using quantum computing concepts. I seek to strengthen my conceptual and mathematical understanding of quantum computing through future exploration and experimentation. Eventually, I might try to create my own simple quantum computing library, similary to what I have already created in this project.
+
+---
 
 ## References
 
