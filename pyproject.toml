@@ -1,13 +1,17 @@
-[quantum-simulator]
+[project]
 name = "quantum-simulator"
 version = "0.1.0"
-description = "A lightweight quantum simulator made entirely with NumPy"
-authors = [{ name = "Brandon Fong", email = "branfong21@gmail.com" }]
-readme = "README.me"
-license = { file = "LICENSE" }
-requires-python = ">=3.10"
+description = "A simple lightweight quantum state simulator made entirely with NumPy"
+authors = [{ name = "Brandon" }]
+requires-python = ">=3.8"
 dependencies = []
 
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -27,6 +27,9 @@ class QuantumState:
     def __str__(self):
         return self.state.round(4).__str__()
     
+    def __getitem__(self, index):
+        return self.state[index]
+    
     @classmethod
     def from_qubits(self, *qubits: 'npt.NDArray | QuantumState') -> 'QuantumState':
         """
