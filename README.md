@@ -1,4 +1,4 @@
-# Quantum Teleportation Protocol with NumPy
+# Quantum Circuit Simulator (NumPy-Based)
 
 ## Table of Contents
 
@@ -15,35 +15,43 @@
 
 ## Overview
 
-Quantum teleportation allows the transfer of an unknown quantum state from one location to another using **entanglement** and **classical communication** without physically sending the qubit itself. This process is important because it is a reliable way to transmit quantum data securely and accurately without measuring the quantum state or violating the **no-cloning theorem.** Quantum teleportation is essential for building quantum networks, distributed quantum computers, and the quantum internet.
+A lightweight, extensible quantum circuit simulator built entirely using NumPy. This simulator models multi-qubit statevectors and supports core gate operations, enabling users to prototype and run simple quantum algorithms from scratch without the use of external libraries such as Qiskit.
 
-## Diagram
+## Features
 
-![Quantum Teleportation](./assets/protocol-diagram.png)
-
-_Figure: Visual representation of the quantum teleportation protocol._
+- **Statevector-based simulation** of arbitrary quantum states
+- **Gate operations:** Supports standard gates including X, Z, H, and CNOT
+- **Multi-qubit support** via tensor product composition
+- **Custom state initialization**
+- **Measurement collapse** for partial measurements
+- **Quantum teleportation** demo implemented as a correctness test
 
 ## Goals
 
-- Understand and implement the **quantum teleportation protocol** without the use of quantum computing libraries (i.e. Qiskit)
-- Explore how **entanglement** and **measurement** affect quantum systems
-- Simulate key quantum gates: **Hadamard**, **CNOT**, **Pauli-X**, and **Pauli-Z**
-- Simulate **partial measurements** of entangled systems
-- Gain insight into how quantum states are represented and evolve
+- **Deepen understanding of quantum mechanics** through simulation-based exploration
+- **Reinforce linear algebra concepts** like unitary transformations and tensor products
+- Build **intuition** around **quantum algorithms** by implementing them from scratch
+- Develop a **clean, modular simulator** that mimics the behavior of quantum state evolution
+- Design **reusable tools** to support rapid prototyping of quantum protocols and algorithms
+- Ensure **accuracy** and **expandability** through well-structured code and careful documentation
 
 ---
 
 ## Project Structure
 
-- [notebooks/](.\quantum-teleportation-project\notebooks)
-  - [prototype.ipynb](.\quantum-teleportation-project\notebooks\prototype.ipynb)
-- [src/](.\quantum-teleportation-project\src)
-  - [main.py](.\quantum-teleportation-project\src\main.py)
-  - [utils.py](.\quantum-teleportation-project\src\utils.py)
-- [.gitignore](.\quantum-teleportation-project.gitignore)
-- [LICENSE](.\quantum-teleportation-project\LICENSE)
-- [README.md](.\quantum-teleportation-project\README.md)
-- [requirements.txt](.\quantum-teleportation-project\requirements.txt)
+- [assets/](.\assets)
+  - [protocol-diagram.png](.\assets\protocol-diagram.png)
+- [notebooks/](.\notebooks)
+  - [prototype.ipynb](.\notebooks\prototype.ipynb)
+- [src/](.\src)
+  - [demos/](.\src\demos)
+    - [teleportation.py](.\src\demos\teleportation.py)
+  - [main.py](.\src\main.py)
+  - [utils.py](.\src\utils.py)
+- [.gitignore](..gitignore)
+- [LICENSE](.\LICENSE)
+- [README.md](.\README.md)
+- [requirements.txt](.\requirements.txt)
 
 ---
 
@@ -52,7 +60,6 @@ _Figure: Visual representation of the quantum teleportation protocol._
 - **Qubits** as complex state vectors
 - **Entanglement** via the Hadamard and CNOT gates (resulting in a bell state)
 - **Quantum measurement** and **state collapse**
-- **Classical communication** to complete teleportation
 - **Custom implementation** of state evolution (no Qiskit involved)
 
 ---
@@ -61,44 +68,47 @@ _Figure: Visual representation of the quantum teleportation protocol._
 
 1. Clone the repository
 
-```bash
-git clone https://github.com/bfong-08/quantum-teleportation-project.git
-cd quantum-teleportation-project
-```
-
-2. (Optional) Create a virtual environment
-
-```bash
-python -m venv venv
-source venv/bin/activate # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Run the simulation
-
-```bash
-python main.py
-```
-
-5. (Optional) Open the notebook for exploration
-
-```bash
-jupyter notebook notebooks/prototype.ipynb
-```
-
-You should see the full protocol simulated step-by-step, including:
-
-- Initial entangled state
-- Measurement outcomes
-- Conditional gate corrections
-- Final comparison between Bob's qubit and the original unknown state
-
 ---
+
+## How It Works
+
+### Example Usage
+
+```python
+from utils import QuantumState
+
+# Initialize individual qubits as NumPy arrays
+A = np.array([1, 0])
+B = np.array([1, 0])
+
+# Initialize two-qubit quantum state
+psi = QuantumState.from_qubits(A, B)
+
+# Apply a Hadamard to qubit 0
+psi.H(0)
+
+# Apply a CNOT with control=0 and target=1
+psi.CNOT(0, 1)
+
+# Output final state
+print(psi)
+```
+
+## Demos
+
+The [demos](./src/demos) test the correctness of the simulator by simulating quantum protocols.
+
+### Quantum Teleportation
+
+The [teleportation demo](.src/demos/teleportation.py) simulates a 3-qubit system that transmits the state of one qubit to another using entanglement and classical communication.
+
+[Diagram](./assets/protocol-diagram.png)
+
+Running the demo:
+
+```bash
+python src/demos/teleportation.py
+```
 
 ## What I Learned
 
@@ -106,7 +116,7 @@ While building this, I deepened my understanding of quantum state manipulation, 
 
 ## Next Steps
 
-My future goals are to explore other quantum algorithms, such as **Grover's Algorithm,** and research what tasks or problems can be solved using quantum computing concepts. I seek to strengthen my conceptual and mathematical understanding of quantum computing through future exploration and experimentation. Eventually, I might try to create my own simple quantum computing library, similary to what I have already created in this project.
+My future goals are to explore other quantum algorithms, such as **Grover's Algorithm,** and research what tasks or problems can be solved using quantum computing concepts. I seek to strengthen my conceptual and mathematical understanding of quantum computing through future exploration and experimentation.
 
 ---
 
