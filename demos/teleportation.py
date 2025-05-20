@@ -1,4 +1,4 @@
-from utils import QuantumState
+from simulator.quantum_state import QuantumState
 import numpy as np
 
 # Alice's qubit
