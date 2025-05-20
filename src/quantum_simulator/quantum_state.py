@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.typing as npt
 from random import random
-from utils import is_pow_of_2, e_norm
+from .utils import is_pow_of_2, e_norm
 
 class QuantumState:
     def __init__(self, statevector: npt.NDArray):
@@ -29,6 +29,9 @@ class QuantumState:
     
     def __getitem__(self, index):
         return self.state[index]
+
+    def __len__(self):
+        return self.state.size
     
     @classmethod
     def from_qubits(self, *qubits: 'npt.NDArray | QuantumState') -> 'QuantumState':
