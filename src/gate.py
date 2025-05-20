@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.typing as npt
 
-class Operator:
+class Gate:
     def __init__(self, matrix: npt.NDArray | list):
         matrix = np.array(matrix, dtype=complex)
         if matrix.shape[0] != matrix.shape[1]:
