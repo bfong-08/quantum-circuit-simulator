@@ -6,3 +6,6 @@
 
 # Ignore pycache
 __pycache__/
+
+# Ignore package
+quantum_simulator.egg-info
