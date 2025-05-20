@@ -64,13 +64,9 @@ A lightweight, extensible quantum circuit simulator built entirely using NumPy. 
 
 ---
 
-## How to Run
-
-1. Clone the repository
-
----
-
 ## How It Works
+
+The `QuantumState` class contains built-in gates that can be applied to specific qubits within the state. Partial measurements automatically update the state.
 
 ### Example Usage
 
@@ -135,5 +131,7 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 ## Contact
 
 Brandon Fong
+
 branfong21@gmail.com
+
 [https://github.com/bfong-08](https://github.com/bfong-08)
