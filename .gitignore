@@ -8,4 +8,4 @@
 __pycache__/
 
 # Ignore package
-quantum_simulator.egg-info
+quantum_simulator.egg-info/
