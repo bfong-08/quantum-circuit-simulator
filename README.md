@@ -99,7 +99,7 @@ The [demos](./src/demos) test the correctness of the simulator by simulating qua
 
 The [teleportation demo](.src/demos/teleportation.py) simulates a 3-qubit system that transmits the state of one qubit to another using entanglement and classical communication.
 
-[Diagram](./assets/protocol-diagram.png)
+![image](./assets/teleportation-protocol-diagram.png)
 
 Running the demo:
 
