@@ -25,6 +25,7 @@ A lightweight, extensible quantum circuit simulator built entirely using NumPy. 
 - **Custom state initialization**
 - **Measurement collapse** for partial measurements
 - **Quantum teleportation** demo implemented as a correctness test
+- _Planned:_ Custom gate implementation using the 'Gate' class
 
 ## Goals
 
