@@ -97,14 +97,22 @@ The [demos](./src/demos) test the correctness of the simulator by simulating qua
 
 ### Quantum Teleportation
 
-The [teleportation demo](.src/demos/teleportation.py) simulates a 3-qubit system that transmits the state of one qubit to another using entanglement and classical communication.
+The [teleportation demo](.demos/teleportation.py) simulates a 3-qubit system that transmits the state of one qubit to another using entanglement and classical communication.
 
 ![image](./assets/teleportation-protocol-diagram.png)
 
 Running the demo:
 
 ```bash
-python src/demos/teleportation.py
+python demos/teleportation.py
+```
+
+### Deutsch's Algorithm
+
+The [Deutsch's Algorithm demo](.demos/deutschs_algorithm.py) simulates a 2-qubit system that queries once to determine whether an unknown function $f:\Sigma\rightarrow\Sigma$ is constant (return 0) or balanced (return 1).
+
+```bash
+python demos/deutschs_algorithm.py
 ```
 
 ## What I Learned
