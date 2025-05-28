@@ -186,6 +186,39 @@ class QuantumState:
         operator = self.__expand_operator(index, h)
         self.state = operator @ self.state
 
+    def T(self, index: int):
+        """
+        Performs a T gate on the specified qubit,
+        leaving all other qubits unchanged.
+
+        Args:
+            index (int): the index of the target qubit
+        """
+        index = self.n_qubits - index - 1
+        t = np.array([
+            [1, 0],
+            [0, complex(1/np.sqrt(2), 1/np.sqrt(2))]
+        ], dtype=complex)
+        operator = self.__expand_operator(index, t)
+        self.state = operator @ self.state
+    
+    def Tdg(self, index: int):
+        """
+        Performs a T-dagger gate on the specified qubit,
+        leaving all other qubits unchanged. T-dagger is the 
+        conjugate-transpose of the T gate.
+
+        Args:
+            index (int): the index of the target qubit
+        """
+        index = self.n_qubits - index - 1
+        t = np.array([
+            [1, 0],
+            [0, complex(1/np.sqrt(2), -1/np.sqrt(2))]
+        ], dtype=complex)
+        operator = self.__expand_operator(index, t)
+        self.state = operator @ self.state
+
     def __expand_operator(self, index: int, operation: npt.NDArray) -> npt.NDArray:
         """
         Expands an operator to NxN dimensions where N is the 
